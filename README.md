@@ -1,7 +1,9 @@
 Linux
 =====
-Este Repositorio contiene las Tareas de Linux para ingenieria.
-Hechas por:
-Edgar M. Amezquita
-Santiago Quintero
-Juan C. Arevalo
+
+Repositorio con las tareas de Linux para ingeniería.
+
+# Autores:
+- Edgar M. Amézquita
+- Santiago Quintero
+- Juan C. Arévalo
