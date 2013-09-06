@@ -1,12 +1,9 @@
-let A=$1
-let B=$3
-
 function division(){
-	echo $(echo "$A/$B" | bc -l)
+	echo $(echo "$1/$2" | bc -l)
 }
 
 function multiplicacion(){
-	echo $(echo "$A*$B" | bc)
+	echo $(echo "$1*$2" | bc)
 }
 
-multiplicacion
+multiplicacion $1 $3
