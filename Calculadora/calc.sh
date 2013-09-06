@@ -1,1 +1,9 @@
-//Calculadora 
+let A=$1
+let B=$3
+
+function division(){
+	echo $(echo "$A/$B" | bc -l)
+}
+
+division
+
