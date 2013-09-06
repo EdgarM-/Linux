@@ -1,0 +1,10 @@
+
+#Calculadora 
+let A=$1
+let B=$3
+function sumar()
+{
+    resultado=$((A + B))
+    echo $A + $B = $resultado
+}
+sumar
