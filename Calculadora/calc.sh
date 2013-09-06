@@ -5,5 +5,8 @@ function division(){
 	echo $(echo "$A/$B" | bc -l)
 }
 
-division
+function multiplicacion(){
+	echo $(echo "$A*$B" | bc)
+}
 
+multiplicacion
