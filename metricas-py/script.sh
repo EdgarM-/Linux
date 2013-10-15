@@ -23,6 +23,8 @@ then
     rm $BLANKS_OUT
 fi
 
+SCRIPTS_IN=`zenity --file-selection --multiple --separator=" "`
+
 # 
 # Total de lineas de codigo 
 # 
@@ -49,12 +51,21 @@ function funciones()
         echo $1 $(grep -c "def " $1) >> $FUNCIONES_OUT
 }
 
+#
+# Total de lineas blancas
+#
+
 function lines()
 {
   echo $1 $(grep -ce ^$ $1) >> $BLANKS_OUT
 }
 
-# lines $1
-# t_lineas $1
-# comment $1
-# funciones $1
+for SCRIPT_IN in ${SCRIPTS_IN[@]}
+do
+	lines $SCRIPT_IN
+	t_lineas $SCRIPT_IN
+	comment $SCRIPT_IN
+	funciones $SCRIPT_IN
+done
+
+exit 0
