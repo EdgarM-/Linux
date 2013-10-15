@@ -68,4 +68,45 @@ do
 	funciones $SCRIPT_IN
 done
 
+if [ -f "comments.png" ]
+then
+    rm comments.png
+fi
+
+if [ -f "funciones.png" ]
+then
+    rm funciones.png
+fi
+
+if [ -f "blancas.png" ]
+then
+    rm blancas.png
+fi
+
+if [ -f "lineas.png" ]
+then
+    rm lineas.png
+fi
+
+
+GRAFICS_IN=`zenity --hide-column 2 --print-column 2 --list  --column "grafica que desea sacar" --column "columna oculta" "comentarios" "c" "funciones" "f"  "lineas en blanco" "l" "total de lineas" "t" --separator=" " --multiple`
+
+for GRAFICS_IN in ${GRAFICS_IN[@]}
+do
+	if [ $GRAFICS_IN = "c" ];then
+		gnuplot comments.gp
+	fi
+	if [ $GRAFICS_IN = "f" ];then
+                gnuplot funciones.gp
+        fi
+	if [ $GRAFICS_IN = "l" ];then
+                gnuplot lblanks.gp
+        fi
+	if [ $GRAFICS_IN = "t" ];then
+                gnuplot lineas.gp
+        fi
+done
+
 exit 0
+
+
