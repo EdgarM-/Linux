@@ -3,22 +3,22 @@ TLINEAS_OUT="Total.txt"
 COMMS_OUT="Comments.txt"
 BLANKS_OUT="Blancas.txt"
 
-if [-f $FUNCIONES_OUT]
+if [ -f $FUNCIONES_OUT ]
 then
     rm $FUNCIONES_OUT
 fi
 
-if [-f $TLINEAS_OUT]
+if [ -f $TLINEAS_OUT ]
 then
     rm $TLINEAS_OUT
 fi
 
-if [-f $COMMS_OUT]
+if [ -f $COMMS_OUT ]
 then
     rm $COMMS_OUT
 fi
 
-if [-f $BLANKS_OUT]
+if [ -f $BLANKS_OUT ]
 then
     rm $BLANKS_OUT
 fi
