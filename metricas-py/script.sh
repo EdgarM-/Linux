@@ -51,7 +51,7 @@ function funciones()
 
 function lines()
 {
-  echo $(grep -ce ^$ $1) >> $BLANKS_OUT
+  echo $1 $(grep -ce ^$ $1) >> $BLANKS_OUT
 }
 
 # lines $1
