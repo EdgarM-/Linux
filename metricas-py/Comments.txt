@@ -1,2 +1,0 @@
-/home/camilo/Linux/metricas-py/algo.py 3
-/home/camilo/Linux/metricas-py/pruebarevalo.py 5
