@@ -29,17 +29,19 @@ SCRIPTS_IN=`zenity --file-selection --multiple --separator=" "`
 # Total de lineas de codigo 
 # 
 
-function t_lineas(){ 
-    echo $1 $(awk 'END { print NR}' $1) >> $TLINEAS_OUT 
+function t_lineas()
+{ 
+    echo $(abstorel $1) $(awk 'END { print NR}' $1) >> $TLINEAS_OUT 
 } 
 
 #
+
 # Total de comentarios
 #
 
 function comment()
 {
-  echo $1 $(grep -c \# $1) >> $COMMS_OUT
+    echo $(abstorel $1) $(grep -c \# $1) >> $COMMS_OUT
 }
 
 #
@@ -48,7 +50,7 @@ function comment()
 
 function funciones()
 {
-        echo $1 $(grep -c "def " $1) >> $FUNCIONES_OUT
+    echo $(abstorel $1) $(grep -c "def " $1) >> $FUNCIONES_OUT
 }
 
 #
@@ -57,8 +59,43 @@ function funciones()
 
 function lines()
 {
-  echo $1 $(grep -ce ^$ $1) >> $BLANKS_OUT
+    echo $(abstorel $1) $(grep -ce ^$ $1) >> $BLANKS_OUT
 }
+#
+# Pasar de direccion absoluta a direccion relativa(http://stackoverflow.com/questions/2564634/bash-convert-absolute-path-into-relative-path-given-a-current-directory, de ahi se saco el script y se le hicieron pequeños cambios)
+#
+
+function abstorel()
+{
+    source=$(pwd)
+    target=$1
+
+    common_part=$source 
+    result=""
+
+    while [[ "${target#$common_part}" == "${target}" ]]; do
+	common_part="$(dirname $common_part)"
+	if [[ -z $result ]]; then
+            result=".."
+	else
+            result="../$result"
+	fi
+    done
+
+    if [[ $common_part == "/" ]]; then
+	result="$result/"
+    fi
+
+    forward_part="${target#$common_part}"
+
+    if [[ -n $result ]] && [[ -n $forward_part ]]; then
+	result="$result$forward_part"
+    elif [[ -n $forward_part ]]; then
+	result="${forward_part:1}"
+    fi
+
+    echo $result
+} 
 
 for SCRIPT_IN in ${SCRIPTS_IN[@]}
 do
@@ -89,7 +126,7 @@ then
 fi
 
 
-GRAFICS_IN=`zenity --hide-column 2 --print-column 2 --list  --column "grafica que desea sacar" --column "columna oculta" "comentarios" "c" "funciones" "f"  "lineas en blanco" "l" "total de lineas" "t" --separator=" " --multiple`
+GRAFICS_IN=`zenity --hide-column 2 --print-column 2 --list  --column "Grafica que desea sacar" --column "columna oculta" "Comentarios" "c" "Funciones" "f"  "Lineas en blanco" "l" "Total de lineas" "t" "Todas las anteriores" "a" --separator=" " --multiple`
 
 for GRAFICS_IN in ${GRAFICS_IN[@]}
 do
@@ -104,6 +141,13 @@ do
         fi
 	if [ $GRAFICS_IN = "t" ];then
                 gnuplot lineas.gp
+        fi
+
+	if [ $GRAFICS_IN = "a" ];then
+                gnuplot lineas.gp
+                gnuplot lblanks.gp
+		gnuplot comments.gp
+		gnuplot funciones.gp
         fi
 done
 
